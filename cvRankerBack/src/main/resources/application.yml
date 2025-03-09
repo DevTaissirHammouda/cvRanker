@@ -4,5 +4,7 @@ spring:
       uri: mongodb://localhost:27017/cvRanker
   application:
     name: cvRanker
+
 server:
   port: 8080
+

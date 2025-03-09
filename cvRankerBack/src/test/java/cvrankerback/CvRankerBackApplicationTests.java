@@ -1,4 +1,4 @@
-package filetransfer.cvrankerback;
+package cvrankerback;
 
 import cvrankerback.CvRankerBackApplication;
 import org.junit.jupiter.api.Test;

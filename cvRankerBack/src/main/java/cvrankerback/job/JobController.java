@@ -23,8 +23,8 @@ public class JobController {
         return ResponseEntity.ok(jobService.getAllJobs());
     }
 
-    @GetMapping("/employer/{id}")
-    public ResponseEntity<List<Job>> getJobsByEmployer(@PathVariable String id) {
-        return ResponseEntity.ok(jobService.getJobsByEmployer(id));
+    @GetMapping("/employer/{email}")
+    public ResponseEntity<List<Job>> getJobsByEmployer(@PathVariable String email) {
+        return ResponseEntity.ok(jobService.getJobsByEmployer(email));
     }
 }

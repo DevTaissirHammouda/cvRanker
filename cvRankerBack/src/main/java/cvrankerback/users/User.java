@@ -22,6 +22,3 @@ public class User {
 }
 
 
-enum Role {
-    JOB_SEEKER, EMPLOYER
-}

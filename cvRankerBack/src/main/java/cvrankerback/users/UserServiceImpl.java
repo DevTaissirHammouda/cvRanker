@@ -1,6 +1,7 @@
 package cvrankerback.users;
 
 
+import cvrankerback.users.DTO.userRegisterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -12,9 +13,16 @@ public class UserServiceImpl implements UserService {
 
 
 
-    public User registerUser(User user) {
-        user.setPassword(user.getPassword());
-        return userRepository.save(user);
+    public User registerUser(userRegisterDTO user) {
+        User newUser = User.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .role(user.getRole())
+                .build();
+        return userRepository.save(newUser);
+
+
     }
 
     @Override

@@ -22,7 +22,7 @@
     <nav class="mt-5">
       <div *ngFor="let item of menuItems" class="relative">
         <!-- Menu Item -->
-        <button (click)="setActive(item)" class="flex items-center w-full px-4 py-3 cursor-pointer hover:bg-gray-700 transition-colors"
+        <button [appRoleVisible]="item.role"  (click)="setActive(item)" class="flex items-center w-full px-4 py-3 cursor-pointer hover:bg-gray-700 transition-colors"
                 [ngClass]="{'bg-gray-700': item.isActive}">
           <span class="material-icons-outlined text-gray-300 text-xl">{{item.icon}}</span>
           <span *ngIf="isExpanded" class="ml-3 text-gray-300">{{item.label}}</span>

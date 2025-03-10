@@ -5,6 +5,11 @@ interface MenuItem {
   icon: string;
   route?: string;
   isActive?: boolean;
+  role?: Role[];
+}
+export enum Role {
+  JOB_SEEKER = "JOB_SEEKER",
+  EMPLOYER = "EMPLOYER"
 }
 
 @Component({
@@ -18,24 +23,27 @@ export class SideBarComponent implements OnInit {
     {
       label: "Home",
       icon: "🏠", // Material Icon for Home
-      route: "/home",
-      isActive: true
+      route: "/AllJobs",
+      isActive: true,
+      role: [Role.JOB_SEEKER, Role.EMPLOYER]
     },
     {
       label: "Jobs",
       icon: "📁", // Material Icon for Jobs
       route: "/jobs",
+      role: [Role.EMPLOYER]
     },
     {
       label: "CV",
       icon: "📄", // Material Icon for CV
       route: "/cv",
+      role:  [Role.JOB_SEEKER]
     },
-    {
-      label: "Settings",
-      icon: "⚙️", // Material Icon for Settings
-      route: "/settings"
-    }
+    // {
+    //   label: "Settings",
+    //   icon: "⚙️", // Material Icon for Settings
+    //   route: "/settings"
+    // }
   ];
 
   ngOnInit(): void {

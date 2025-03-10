@@ -22,6 +22,7 @@ import {
 } from "@angular/cdk/table";
 import {PaginationComponent} from "./components/jobs-table/pagination/pagination.component";
 import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { RoleVisibleDirective } from './directives/role-visible.directive';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
     UserLoginComponent,
     JobsTableComponent,
     CvsTableComponent,
-    SideBarComponent
+    SideBarComponent,
+    RoleVisibleDirective
   ],
   imports: [
     BrowserModule,

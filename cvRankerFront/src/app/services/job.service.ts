@@ -18,7 +18,7 @@ export class JobService {
     return this.http.get(`${this.apiUrl}/all`);
   }
 
-  getJobsByEmployer(employerId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/employer/${employerId}`);
+  getJobsByEmployer(employerEmail: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/employer/${employerEmail}`);
   }
 }

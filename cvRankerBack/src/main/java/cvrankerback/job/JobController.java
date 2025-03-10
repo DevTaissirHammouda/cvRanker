@@ -1,5 +1,6 @@
 package cvrankerback.job;
 
+import cvrankerback.job.dto.jobDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,8 @@ public class JobController {
     }
 
     @GetMapping("/employer/{email}")
-    public ResponseEntity<List<Job>> getJobsByEmployer(@PathVariable String email) {
+    public ResponseEntity<List<jobDto>> getJobsByEmployer(@PathVariable String email) {
         return ResponseEntity.ok(jobService.getJobsByEmployer(email));
     }
+
 }

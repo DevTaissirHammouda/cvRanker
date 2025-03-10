@@ -9,4 +9,5 @@ import java.util.List;
 public interface CVRepository extends MongoRepository<CV, String> {
     List<CV> findByJobId(String jobId);
     List<CV> findByJobSeekerId(String jobSeekerId);
+    long countByJobId(String jobId);
 }

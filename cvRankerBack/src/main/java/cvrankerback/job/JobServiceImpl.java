@@ -48,7 +48,21 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> getAllJobs() {
-        return jobRepository.findAll();
+    public List<jobDto> getAllJobs() {
+
+        List<Job> jobs = jobRepository.findAll();
+
+        return jobs.stream().map(job -> {
+            long cvCount = cvRepository.countByJobId(job.getId());
+            return jobDto.builder()
+                    .id(job.getId())
+                    .title(job.getTitle())
+                    .description(job.getDescription())
+                    .companyName(job.getCompanyName())
+                    .postedBy(job.getPostedBy())
+                    .postedAt(job.getPostedAt())
+                    .CVsCount(cvCount)
+                    .build();
+        }).toList();
     }
 }

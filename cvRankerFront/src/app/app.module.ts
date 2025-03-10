@@ -23,6 +23,7 @@ import {
 import {PaginationComponent} from "./components/jobs-table/pagination/pagination.component";
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { RoleVisibleDirective } from './directives/role-visible.directive';
+import { AllJobsTableComponent } from './components/all-jobs-table/all-jobs-table.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RoleVisibleDirective } from './directives/role-visible.directive';
     JobsTableComponent,
     CvsTableComponent,
     SideBarComponent,
-    RoleVisibleDirective
+    RoleVisibleDirective,
+    AllJobsTableComponent
   ],
   imports: [
     BrowserModule,

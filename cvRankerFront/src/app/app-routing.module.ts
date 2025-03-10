@@ -5,6 +5,7 @@ import {JobPostingComponent} from "./components/job-posting/job-posting.componen
 import {tokenGuard} from "./guard/token-guard.guard";
 import {UserRegisterComponent} from "./components/user-register/user-register.component";
 import {JobsTableComponent} from "./components/jobs-table/jobs-table.component";
+import {AllJobsTableComponent} from "./components/all-jobs-table/all-jobs-table.component";
 
 
 const routes: Routes = [
@@ -13,6 +14,8 @@ const routes: Routes = [
   { path: 'register', component: UserRegisterComponent },
   { path: 'job', component: JobPostingComponent,canActivate: [tokenGuard] },
   { path: 'jobs', component: JobsTableComponent,canActivate: [tokenGuard] },
+  { path: 'allJobs', component: AllJobsTableComponent,canActivate: [tokenGuard] },
+
   { path: '**', redirectTo: 'login' } // Redirect unknown paths
 ];
 

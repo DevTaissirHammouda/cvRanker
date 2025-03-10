@@ -1,0 +1,90 @@
+<section class="bg-gray-50  dark:bg-gray-900 py-10">
+  <div class="mx-auto  px-4 lg:px-12">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-semibold text-gray-800 dark:text-white">My Jobs</h1>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg ">
+      <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-6">
+        <div class="w-full md:w-1/2">
+          <form class="flex items-center">
+            <label for="simple-search" class="sr-only">Search</label>
+            <div class="relative w-full">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <input [formControl]="searchFormControl" type="text" id="simple-search" name="searchQuery" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full pl-10 p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search">
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto flex items-center justify-center">
+        <table cdk-table [dataSource]="dataOnPage$" class="w-full text-sm text-left text-gray-600 dark:text-gray-300">
+          <!-- Header -->
+          <tr cdk-header-row *cdkHeaderRowDef="displayedColumns$.value" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium text-md">
+          </tr>
+          <tr cdk-row *cdkRowDef="let row; let i = index; columns: displayedColumns$.value;" [ngClass]="getRowColor(i)" class="border-b hover:bg-gray-100 dark:hover:bg-gray-600">
+          </tr>
+
+          <!-- Table Columns -->
+          <ng-container cdkColumnDef="title">
+            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('title')">
+              Title <span *ngIf="sortKey$.value === 'title'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+            </th>
+            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.title }}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="companyName">
+            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('companyName')">
+              Company Name <span *ngIf="sortKey$.value === 'companyName'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+            </th>
+            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.companyName }}</td>
+          </ng-container>
+          <ng-container cdkColumnDef="postedBy">
+            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('postedBy')">
+              Posted by <span *ngIf="sortKey$.value === 'postedBy'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+            </th>
+            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.postedBy }}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="postedAt">
+            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('postedAt')">
+              Posted At <span *ngIf="sortKey$.value === 'postedAt'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+            </th>
+            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ formatDate(row.postedAt) }}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="cvsCount">
+            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('cvsCount')">
+              CVs Count <span *ngIf="sortKey$.value === 'cvsCount'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+            </th>
+            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.cvsCount }}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="description">
+            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('description')">
+              Description <span *ngIf="sortKey$.value === 'description'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+            </th>
+            <td class="px-6 py-3 truncate max-w-xs" cdk-cell *cdkCellDef="let row">{{ row.description }}</td>
+          </ng-container>
+
+          <ng-container cdkColumnDef="Action">
+            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('Action')">
+              Action <span *ngIf="sortKey$.value === 'Action'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+            </th>
+            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.Action }}</td>
+          </ng-container>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex flex-col sm:flex-row flex-wrap items-center justify-between p-6 bg-gray-100 dark:bg-gray-700">
+        <app-pagination [collectionSize]="dataSize" [pageSize]="pageSize$.value" (pageChange)="changeCurrentPage($event)" [currentPage]="currentPage$.value">
+        </app-pagination>
+      </div>
+    </div>
+  </div>
+</section>

@@ -23,7 +23,7 @@ export class SideBarComponent implements OnInit {
     {
       label: "Home",
       icon: "🏠", // Material Icon for Home
-      route: "/AllJobs",
+      route: "/allJobs",
       isActive: true,
       role: [Role.JOB_SEEKER, Role.EMPLOYER]
     },

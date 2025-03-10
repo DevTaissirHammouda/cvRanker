@@ -1,10 +1,10 @@
-<section class="bg-gray-50 min-h-screen flex items-center justify-center dark:bg-gray-900 py-10">
-  <div class="mx-auto w-full max-w-7xl px-4 lg:px-12">
+<section class="bg-gray-50  dark:bg-gray-900 py-10">
+  <div class="mx-auto  px-4 lg:px-12">
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-2xl font-semibold text-gray-800 dark:text-white">My Jobs</h1>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg ">
       <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-6">
         <div class="w-full md:w-1/2">
           <form class="flex items-center">
@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto flex items-center justify-center">
         <table cdk-table [dataSource]="dataOnPage$" class="w-full text-sm text-left text-gray-600 dark:text-gray-300">
           <!-- Header -->
           <tr cdk-header-row *cdkHeaderRowDef="displayedColumns$.value" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium text-md">

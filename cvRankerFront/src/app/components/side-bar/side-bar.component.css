@@ -1,0 +1,16 @@
+@media (min-width: 768px) {
+  #sidebar {
+    transform: translateX(0);
+  }
+}
+/* Optional styles */
+.sidebar {
+  transition: all 0.3s ease-in-out;
+}
+/* For mobile devices, we set the sidebar to collapse to the side (small width),
+   and for larger devices, we set it to full width. */
+@media (max-width: 1024px) {
+  .sidebar {
+    transition: width 0.3s ease-in-out;
+  }
+}

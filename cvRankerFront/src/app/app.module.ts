@@ -21,6 +21,7 @@ import {
   CdkTable
 } from "@angular/cdk/table";
 import {PaginationComponent} from "./components/jobs-table/pagination/pagination.component";
+import { SideBarComponent } from './components/side-bar/side-bar.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {PaginationComponent} from "./components/jobs-table/pagination/pagination
     JobPostingComponent,
     UserLoginComponent,
     JobsTableComponent,
-    CvsTableComponent
+    CvsTableComponent,
+    SideBarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,6 @@
+<app-job-modal></app-job-modal>
+
+
 <section class="bg-gray-50  dark:bg-gray-900 py-10">
   <div class="mx-auto  px-4 lg:px-12">
     <div class="flex items-center justify-between mb-6">
@@ -17,8 +20,13 @@
               </div>
               <input [formControl]="searchFormControl" type="text" id="simple-search" name="searchQuery" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 w-full pl-10 p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search">
             </div>
+
           </form>
+
         </div>
+        <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center " type="button">
+          Post Job
+        </button>
       </div>
 
       <div class="overflow-x-auto flex items-center justify-center">
@@ -69,7 +77,9 @@
             <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('Action')">
               Action <span *ngIf="sortKey$.value === 'Action'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
             </th>
-            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.Action }}</td>
+            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.Action }} <button class="p-2 btn btn-primary rounded-full text-blue-600 hover:bg-gray-200" type="button" >
+              <i class='bx bxs-right-arrow-circle'></i>
+            </button> </td>
           </ng-container>
         </table>
       </div>

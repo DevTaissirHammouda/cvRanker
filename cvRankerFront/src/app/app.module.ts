@@ -26,6 +26,7 @@ import { RoleVisibleDirective } from './directives/role-visible.directive';
 import { AllJobsTableComponent } from './components/all-jobs-table/all-jobs-table.component';
 import { HomeComponent } from './components/home/home.component';
 import { AccountComponent } from './components/account/account.component';
+import { JobModalComponent } from './components/jobs-table/job-modal/job-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AccountComponent } from './components/account/account.component';
     RoleVisibleDirective,
     AllJobsTableComponent,
     HomeComponent,
-    AccountComponent
+    AccountComponent,
+    JobModalComponent
   ],
   imports: [
     BrowserModule,

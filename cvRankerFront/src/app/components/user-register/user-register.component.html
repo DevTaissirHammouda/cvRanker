@@ -1,0 +1,51 @@
+<div class="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 mt-10">
+  <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Register</h2>
+
+  <form (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label class="block text-gray-700 font-medium">Name</label>
+      <input
+        [(ngModel)]="user.name" name="name"
+        placeholder="Enter your name"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-medium">Email</label>
+      <input
+        [(ngModel)]="user.email" name="email" type="email"
+        placeholder="Enter your email"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-medium">Password</label>
+      <input
+        [(ngModel)]="user.password" name="password" type="password"
+        placeholder="Enter your password"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-medium">Role</label>
+      <select
+        [(ngModel)]="user.role" name="role"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="JOB_SEEKER">Job Seeker</option>
+        <option value="EMPLOYER">Employer</option>
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="w-full bg-blue-500 text-white font-semibold p-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+    >
+      Register
+    </button>
+  </form>
+  <a routerLink="/login" class="block text-left mt-4 text-blue-500">Already have an account? Login</a>
+</div>

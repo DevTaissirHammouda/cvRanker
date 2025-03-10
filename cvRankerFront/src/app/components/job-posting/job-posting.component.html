@@ -1,0 +1,39 @@
+<div class="max-w-lg mx-auto bg-white shadow-lg rounded-xl p-6 mt-10">
+  <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Post a Job</h2>
+
+  <form (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label class="block text-gray-700 font-medium">Job Title</label>
+      <input
+        [(ngModel)]="job.title" name="title"
+        placeholder="Enter job title"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-medium">Job Description</label>
+      <textarea
+        [(ngModel)]="job.description" name="description" rows="4"
+        placeholder="Enter job description"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+      ></textarea>
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-medium">Company Name</label>
+      <input
+        [(ngModel)]="job.companyName" name="companyName"
+        placeholder="Enter company name"
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="w-full bg-blue-500 text-white font-semibold p-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+    >
+      Post Job
+    </button>
+  </form>
+</div>

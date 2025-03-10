@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from "../../services/user.service";
 
 interface MenuItem {
   label: string;
@@ -23,14 +24,14 @@ export class SideBarComponent implements OnInit {
     {
       label: "Home",
       icon: "🏠", // Material Icon for Home
-      route: "/allJobs",
+      route: "/home/allJobs",
       isActive: true,
       role: [Role.JOB_SEEKER, Role.EMPLOYER]
     },
     {
       label: "Jobs",
       icon: "📁", // Material Icon for Jobs
-      route: "/jobs",
+      route: "/home/jobs",
       role: [Role.EMPLOYER]
     },
     {
@@ -46,11 +47,19 @@ export class SideBarComponent implements OnInit {
     // }
   ];
 
+  logoutItem: MenuItem[] = [{
+
+  label: "Logout",
+  icon: "🚪🚶",
+  route: "/logout"
+
+}]
   ngOnInit(): void {
     this.handleResize();
     window.addEventListener("resize", this.handleResize.bind(this));
   }
-
+constructor(private userService: UserService) {
+}
   toggleSidebar(): void {
     this.isExpanded = !this.isExpanded;
   }
@@ -66,6 +75,9 @@ export class SideBarComponent implements OnInit {
       this.isExpanded = false;
     }
   }
+logOut(){
+    this.userService.logout();
+}
 
   ngOnDestroy(): void {
     window.removeEventListener("resize", this.handleResize.bind(this));

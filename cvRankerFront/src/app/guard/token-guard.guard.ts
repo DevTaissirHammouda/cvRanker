@@ -7,7 +7,7 @@ export const tokenGuard: CanActivateFn = (route, state) => {
     return true; // Allow access
   } else {
     const router = new Router();
-    router.navigate(['/login']); // Redirect to login if no token
+    router.navigate(['/account/login']); // Redirect to login if no token
     return false;
   }
 };

@@ -27,10 +27,10 @@ export class UserLoginComponent {
           localStorage.setItem('role', response.role || 'user'); // Default to 'user' if role is undefined
           localStorage.setItem('email', this.user.email); // Store email
           if (response.role === 'JOB_SEEKER') {
-          this.router.navigate(['/job']);
+          this.router.navigate(['/home/job']);
           }
           if (response.role === 'EMPLOYER') {
-          this.router.navigate(['/cv-post']);
+          this.router.navigate(['/home/jobs']);
 
           }
         } else {

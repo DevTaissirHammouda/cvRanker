@@ -24,6 +24,8 @@ import {PaginationComponent} from "./components/jobs-table/pagination/pagination
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { RoleVisibleDirective } from './directives/role-visible.directive';
 import { AllJobsTableComponent } from './components/all-jobs-table/all-jobs-table.component';
+import { HomeComponent } from './components/home/home.component';
+import { AccountComponent } from './components/account/account.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { AllJobsTableComponent } from './components/all-jobs-table/all-jobs-tabl
     CvsTableComponent,
     SideBarComponent,
     RoleVisibleDirective,
-    AllJobsTableComponent
+    AllJobsTableComponent,
+    HomeComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {environment} from "../../environments/environment";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,8 @@ import {environment} from "../../environments/environment";
 export class UserService {
   private apiUrl = `${environment.apiBaseUrl}/api/users`; // Set your backend API base URL here
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private router:Router) {}
 
   // Register user
   registerUser(user: any): Observable<any> {
@@ -28,6 +30,7 @@ export class UserService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+      this.router.navigate(['/account/login']);
   }
 
 }

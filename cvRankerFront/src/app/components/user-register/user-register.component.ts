@@ -21,7 +21,7 @@ export class UserRegisterComponent {
 
   onSubmit() {
     this.userService.registerUser(this.user).subscribe((response) => {
-       this.router.navigate(['/login']);
+       this.router.navigate(['/account/login']);
       console.log('User registered successfully!', response);
     });
   }

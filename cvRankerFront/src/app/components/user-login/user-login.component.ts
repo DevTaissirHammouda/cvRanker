@@ -26,13 +26,7 @@ export class UserLoginComponent {
           localStorage.setItem('token', response.token); // Store token
           localStorage.setItem('role', response.role || 'user'); // Default to 'user' if role is undefined
           localStorage.setItem('email', this.user.email); // Store email
-          if (response.role === 'JOB_SEEKER') {
-          this.router.navigate(['/home/job']);
-          }
-          if (response.role === 'EMPLOYER') {
-          this.router.navigate(['/home/jobs']);
-
-          }
+          this.router.navigate(['/home/allJobs']); // Navigate to jobs page
         } else {
           this.errorMessage = 'Invalid response from server.';
         }

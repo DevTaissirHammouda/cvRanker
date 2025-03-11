@@ -73,14 +73,30 @@
             <td class="px-6 py-3 truncate max-w-xs" cdk-cell *cdkCellDef="let row">{{ row.description }}</td>
           </ng-container>
 
-          <ng-container cdkColumnDef="Action">
-            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('Action')">
-              Action <span *ngIf="sortKey$.value === 'Action'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+          <ng-container cdkColumnDef="action">
+            <th class="px-6 py-3 w-1/7 text-center normal-case" cdk-header-cell *cdkHeaderCellDef>
+             Action
             </th>
-            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.Action }} <button class="p-2 btn btn-primary rounded-full text-blue-600 hover:bg-gray-200" type="button" >
-              <i class='bx bxs-right-arrow-circle'></i>
-            </button> </td>
+            <td class="w-8 " cdk-cell *cdkCellDef="let row">
+              <div class="flex justify-center  relative">
+
+                <div class="group">
+                  <button  class=" p-2 btn btn-primary rounded-full  text-red-700  hover:bg-gray-200" >
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                  <span class="absolute hidden group-hover:inline-block bg-gray-500 text-white  rounded-lg py-1 px-2 bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-100 transition-opacity duration-300">
+    Delete
+  </span> </div>
+
+
+                <button  class=" p-2 btn btn-primary rounded-full text-green-600 hover:bg-gray-200" >
+                  <i class="fa-regular fa-circle-right"></i>
+
+                </button>
+              </div>
+            </td>
           </ng-container>
+v
         </table>
       </div>
 

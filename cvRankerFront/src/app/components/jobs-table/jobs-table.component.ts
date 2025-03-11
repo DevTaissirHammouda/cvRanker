@@ -21,7 +21,7 @@ export class JobsTableComponent implements OnInit {
     "postedAt",
     "cvsCount",
 
-    'Action'
+    'action'
   ]);
   currentPage$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(10);

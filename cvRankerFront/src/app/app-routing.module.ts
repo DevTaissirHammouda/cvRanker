@@ -13,15 +13,14 @@ import {AccountComponent} from "./components/account/account.component";
 const routes: Routes = [
 
 
-  // Redirect unknown paths
-
   {
     path: 'home',
     component: HomeComponent,
     canActivate: [],
     children:[
 
-      { path: 'job', component: JobPostingComponent,canActivate: [tokenGuard] },
+
+      // { path: 'job', component: JobPostingComponent,canActivate: [tokenGuard] },
       { path: 'jobs', component: JobsTableComponent,canActivate: [tokenGuard] },
       { path: 'allJobs', component: AllJobsTableComponent,canActivate: [tokenGuard] },
 

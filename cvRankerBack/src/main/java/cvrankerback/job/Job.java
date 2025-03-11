@@ -19,4 +19,6 @@ public class Job {
     private String companyName;
     private String postedBy; // Employer ID
     private LocalDateTime postedAt;
+    private String selectedCV; // CV ID
+    private String status;
 }

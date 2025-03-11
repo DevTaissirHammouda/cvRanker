@@ -18,4 +18,10 @@ export class CvService {
   downloadCV(cvId: string): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/${cvId}/download`, { responseType: 'blob' });
   }
+  getCvs(jobId:string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/job/${jobId}`);
+  }
+  selectCv(jobId:string,cvId:string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/select/${jobId}/${cvId}`);
+  }
 }

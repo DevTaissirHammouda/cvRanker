@@ -4,6 +4,7 @@ import {FormControl} from "@angular/forms";
 import {initFlowbite} from "flowbite";
 import {JobService} from "../../services/job.service";
 import {JobTableService} from "../../servicesTables/job-table.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-jobs-table',
@@ -35,7 +36,8 @@ export class JobsTableComponent implements OnInit {
 
   constructor(
 private jobService:JobService,
-private jobTableservice:JobTableService
+private jobTableservice:JobTableService,
+private router:Router
 
   ) { }
 
@@ -153,7 +155,10 @@ private jobTableservice:JobTableService
     }).replace(',', ''); // To remove comma between date and time
   }
 
+goToCvs(jobId:string){
+  this.router.navigate([`/home/jobs/${jobId}`])
 
+}
   getRowColor( index: number): string {
     // Example condition: alternate row colors based on index
     return index % 2 === 0 ? 'bg-white' : 'bg-gray-100';

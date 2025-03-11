@@ -5,6 +5,8 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "cvs")
 @Data
 @NoArgsConstructor
@@ -18,4 +20,6 @@ public class CV {
     private String fileName;
     private String fileType;
     private byte[] fileData;
+    private LocalDateTime createdAt;
+
 }

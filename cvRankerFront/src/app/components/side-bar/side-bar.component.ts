@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from "../../services/user.service";
+import {Router} from "@angular/router";
 
 interface MenuItem {
   label: string;
@@ -7,6 +8,7 @@ interface MenuItem {
   route?: string;
   isActive?: boolean;
   role?: Role[];
+  isLogout?: boolean;
 }
 export enum Role {
   JOB_SEEKER = "JOB_SEEKER",
@@ -23,51 +25,51 @@ export class SideBarComponent implements OnInit {
   menuItems: MenuItem[] = [
     {
       label: "Home",
-      icon: "🏠", // Material Icon for Home
+      icon: "fa-solid fa-house",
       route: "/home/allJobs",
       isActive: true,
       role: [Role.JOB_SEEKER, Role.EMPLOYER]
     },
     {
       label: "Jobs",
-      icon: "📁", // Material Icon for Jobs
+      icon: "fa-solid fa-folder-open",
       route: "/home/jobs",
-      role: [Role.EMPLOYER]
+      role: [Role.JOB_SEEKER,Role.EMPLOYER]
     },
     {
       label: "CV",
-      icon: "📄", // Material Icon for CV
+      icon: "fa-solid fa-file",
       route: "/cv",
-      role:  [Role.JOB_SEEKER]
+      role: [Role.JOB_SEEKER,Role.EMPLOYER]
     },
-    // {
-    //   label: "Settings",
-    //   icon: "⚙️", // Material Icon for Settings
-    //   route: "/settings"
-    // }
+
+    {
+      label: "Logout",
+      icon: "fa-solid fa-arrow-right-from-bracket",
+      route: "/logout",
+      isLogout: true // Flag for logout action
+    }
   ];
-
-  logoutItem: MenuItem[] = [{
-
-  label: "Logout",
-  icon: "🚪🚶",
-  route: "/logout"
-
-}]
   ngOnInit(): void {
     this.handleResize();
     window.addEventListener("resize", this.handleResize.bind(this));
   }
-constructor(private userService: UserService) {
+constructor(private userService: UserService,
+            private router: Router) {
 }
   toggleSidebar(): void {
     this.isExpanded = !this.isExpanded;
   }
 
-  setActive(item: MenuItem): void {
-    // Set the active item in the menu
-    this.menuItems.forEach(m => m.isActive = false);
+  setActive(item: MenuItem) {
+    this.menuItems.forEach(menu => menu.isActive = false);
     item.isActive = true;
+
+    if (!item.isLogout) {
+      this.router.navigate([item.route]);
+    } else {
+      this.logOut();
+    }
   }
 
   private handleResize(): void {

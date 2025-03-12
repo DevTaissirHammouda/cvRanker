@@ -22,28 +22,27 @@
     <nav class="mt-5">
       <div *ngFor="let item of menuItems" class="relative">
         <!-- Menu Item -->
-        <button   (click)="setActive(item)" class="w-full  px-4 py-3 cursor-pointer hover:bg-gray-700 transition-colors"
-                [ngClass]="{'bg-gray-700 ': item.isActive}">
-          <span class="material-icons-outlined text-gray-300 text-xl">{{item.icon}}</span>
-          <span *ngIf="isExpanded" class="ml-3 text-gray-300">{{item.label}}</span>
-          <span *ngIf="!isExpanded" class="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">{{item.label}}</span>
-          <a *ngIf="isExpanded" [routerLink]="item.route" class="absolute inset-0"></a>
+        <button
+          (click)="setActive(item)"
+          class="w-full flex items-center px-4 py-3 cursor-pointer hover:bg-gray-700 transition-colors"
+          [ngClass]="{'bg-gray-700': item.isActive}"
+          [appRoleVisible]="item.role">
+
+          <!-- Icon -->
+          <i
+            [ngClass]="{
+    'absolute left-10': isExpanded,
+    'text-white text-lg': true
+  }"
+            [class]="item.icon">
+          </i>
+
+          <!-- Label (Visible when expanded) -->
+          <span *ngIf="isExpanded" class="ml-3 text-gray-300">{{ item.label }}</span>
         </button>
       </div>
     </nav>
 
-    <nav class="absolute bottom-10">
-      <div *ngFor="let item of logoutItem" class="relative">
-        <!-- Menu Item -->
-        <button [appRoleVisible]="item.role" (click)="logOut()" class=" w-full px-4 py-3 cursor-pointer hover:bg-gray-700 transition-colors"
-                >
-          <span class="material-icons-outlined text-gray-300 text-xl">{{item.icon}}</span>
-          <span *ngIf="isExpanded" class="ml-3 text-gray-300">{{item.label}}</span>
-          <span *ngIf="!isExpanded" class="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">{{item.label}}</span>
-          <a *ngIf="isExpanded" [routerLink]="item.route" class="absolute inset-0"></a>
-        </button>
-      </div>
-    </nav>
   </div>
 
   <!-- Main Content Area -->

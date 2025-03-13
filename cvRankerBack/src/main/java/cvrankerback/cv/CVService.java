@@ -10,4 +10,5 @@ public interface CVService {
     List<CVsDto> getCVsByJob(String jobId);
     List<CV> getCVsByJobSeeker(String jobSeekerId);
     ResponseEntity<?> selectCV(String jobId, String cvId);
+    CV uploadCVJobSeeker(CV cv);
 }

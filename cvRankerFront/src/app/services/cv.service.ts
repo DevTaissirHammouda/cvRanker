@@ -24,4 +24,7 @@ export class CvService {
   selectCv(jobId:string,cvId:string): Observable<any> {
     return this.http.get(`${this.apiUrl}/select/${jobId}/${cvId}`);
   }
+  jobseekrCvs(cv: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/upload/jobseeker`, cv);
+  }
 }

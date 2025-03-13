@@ -29,6 +29,7 @@ import { AccountComponent } from './components/account/account.component';
 import { JobModalComponent } from './components/jobs-table/job-modal/job-modal.component';
 import {NgOptimizedImage} from "@angular/common";
 import { CvPostModalComponent } from './components/all-jobs-table/cv-post-modal/cv-post-modal.component';
+import { MyCvComponent } from './components/my-cv/my-cv.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CvPostModalComponent } from './components/all-jobs-table/cv-post-modal/
     HomeComponent,
     AccountComponent,
     JobModalComponent,
-    CvPostModalComponent
+    CvPostModalComponent,
+    MyCvComponent
   ],
     imports: [
         BrowserModule,

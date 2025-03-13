@@ -36,6 +36,19 @@ public class CVController {
                 .build();
         return ResponseEntity.ok(cvService.uploadCV(cv));
     }
+//no job
+    @PostMapping("/upload/jobseeker")
+    public ResponseEntity<CV> uploadCVJobSeeker(@RequestParam("jobSeekerId") String jobSeekerId,
+                                       @RequestParam("file") MultipartFile file) throws IOException {
+        CV cv = CV.builder()
+                .jobSeekerId(jobSeekerId)
+                .fileName(file.getOriginalFilename())
+                .fileType(file.getContentType())
+                .fileData(file.getBytes())
+                .build();
+        return ResponseEntity.ok(cvService.uploadCVJobSeeker(cv));
+    }
+
 
     @GetMapping("/{cvId}/download")
     public ResponseEntity<byte[]> downloadCV(@PathVariable String cvId) {

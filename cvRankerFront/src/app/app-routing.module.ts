@@ -9,6 +9,7 @@ import {AllJobsTableComponent} from "./components/all-jobs-table/all-jobs-table.
 import {HomeComponent} from "./components/home/home.component";
 import {AccountComponent} from "./components/account/account.component";
 import {CvsTableComponent} from "./components/cvs-table/cvs-table.component";
+import {MyCvComponent} from "./components/my-cv/my-cv.component";
 
 
 const routes: Routes = [
@@ -25,6 +26,8 @@ const routes: Routes = [
       { path: 'jobs', component: JobsTableComponent,canActivate: [tokenGuard] },
       {path: 'jobs/:jobId/:selectedCV', component: CvsTableComponent,canActivate: [tokenGuard]},
       { path: 'allJobs', component: AllJobsTableComponent,canActivate: [tokenGuard] },
+      { path: 'myCv', component: MyCvComponent,canActivate: [tokenGuard] },
+
 
     ],
   },

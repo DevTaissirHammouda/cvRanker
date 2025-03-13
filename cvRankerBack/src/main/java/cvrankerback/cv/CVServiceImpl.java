@@ -1,5 +1,6 @@
 package cvrankerback.cv;
 
+import com.mongodb.DuplicateKeyException;
 import cvrankerback.cv.DTO.CVsDto;
 import cvrankerback.job.Job;
 import cvrankerback.job.JobRepository;
@@ -26,8 +27,15 @@ public class CVServiceImpl implements CVService {
         if (!userRepository.existsById(cv.getJobSeekerId())) {
             throw new IllegalArgumentException("Job Seeker not found");
         }
-        return cvRepository.save(cv);
+        try {
+            return cvRepository.save(cv);
+        } catch (DuplicateKeyException e) {
+            throw new IllegalStateException("A CV for this job and job seeker already exists.");
+        }
     }
+
+
+
 
     @Override
     public List<CVsDto> getCVsByJob(String jobId) {
@@ -53,5 +61,15 @@ public class CVServiceImpl implements CVService {
         job.setStatus(true);
         jobRepository.save(job);
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public CV uploadCVJobSeeker(CV cv) {
+        try {
+            return cvRepository.save(cv);
+        } catch (DuplicateKeyException e) {
+            throw new IllegalStateException("A CV for this job and job seeker already exists.");
+        }
+
     }
 }

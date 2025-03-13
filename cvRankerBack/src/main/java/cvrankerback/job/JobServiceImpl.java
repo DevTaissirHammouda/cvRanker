@@ -40,6 +40,8 @@ public class JobServiceImpl implements JobService {
                     .companyName(job.getCompanyName())
                     .postedBy(job.getPostedBy())
                     .postedAt(job.getPostedAt())
+                    .status(job.getStatus())
+                    .selectedCV(job.getSelectedCV())
                     .CVsCount(cvCount)
                     .build();
         }).toList();

@@ -76,7 +76,18 @@
             <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('status')">
               Status <span *ngIf="sortKey$.value === 'status'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
             </th>
-            <td class="px-6 py-3 truncate max-w-xs" cdk-cell *cdkCellDef="let row">{{ row.status }}</td>
+            <td class="px-6 py-3 truncate max-w-xs" *cdkCellDef="let row">
+  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+        [ngClass]="row.status ?
+           'bg-red-100 text-red-800 ':
+          'bg-green-100 text-green-800 '">
+    <span class="w-2 h-2 mr-1.5 rounded-full"
+          [ngClass]="row.status ? ' bg-red-600' : ' bg-green-600'">
+    </span>
+    {{ row.status ? 'Closed' : 'Open' }}
+  </span>
+            </td>
+
           </ng-container>
 
           <ng-container cdkColumnDef="action">

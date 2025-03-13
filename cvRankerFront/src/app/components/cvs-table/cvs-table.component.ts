@@ -48,7 +48,7 @@ export class CvsTableComponent implements OnInit {
   ngOnInit() {
     initFlowbite()
 
-    this.loadJobs()
+    this.loadCvs()
     // table base functions
     // data size
     this.cvTableservice.getCvs().subscribe(changedHeroData => {
@@ -104,39 +104,40 @@ export class CvsTableComponent implements OnInit {
     this.currentPage$.next(page)
   }
 
-  adjustSort(key: string) {
-    if (this.sortKey$.value === key) {
-      if (this.sortDirection$.value === 'asc') {
-        this.sortDirection$.next('desc');
-      } else {
-        this.sortDirection$.next('asc');
-      }
-      return;
-    }
-
-    this.sortKey$.next(key);
-    this.sortDirection$.next('asc');
-  }
-
-  changeStatusFilter(){
-    this.currentPage$.next(1)
-
-  }
-
-  changePageSize$(nbPage:number){
-    this.pageSize$.next(nbPage)
-    this.changeCurrentPage(1)
-  }
 
 
+   selectedCV! :string;
   ///// Logic
-  loadJobs() {
+  loadCvs() {
    let jobId = this.router.url.split('/')[3]
+
     this.cvService.getCvs(jobId).subscribe((response) => {
-      this.cvTableservice.setCvs(response)
+      this.selectedCV = this.router.url.split('/')[4]
+
+      this.cvTableservice.setCvs(response, this.selectedCV);
+
+
     })
   }
 
+  showDetails(cvId:string){
+
+
+      if (this.selectedCV == cvId){
+        return true
+      }
+
+  return false
+}
+  showDetailHover(){
+
+
+      if (this.selectedCV != 'none'){
+        return false
+      }
+
+    return true
+  }
 downloadCv(cvId:string){
   this.cvService.downloadCV(cvId).subscribe((response) => {
     const url = window.URL.createObjectURL(response);
@@ -144,13 +145,20 @@ downloadCv(cvId:string){
   })
 }
 
-selectCv(cvId:string){
-  let jobId = this.router.url.split('/')[3]
-  this.cvService.selectCv(jobId,cvId).subscribe((response) => {
-    console.log(response)
-  })
+  selectCv(cvId: string) {
+    let jobId = this.router.url.split('/')[3];
 
-}
+    // Call your service to select the CV
+    this.cvService.selectCv(jobId, cvId).subscribe((response) => {
+      // Navigate to the new route after a delay
+      setTimeout(() => {
+        this.router.navigate([`/home/jobs/${jobId}/${cvId}`]).then(() => {
+          // Wait until the navigation is complete, then reload the page
+          window.location.reload();
+        });
+      }, 1000);
+    });
+  }
 
 
 // In your component.ts file

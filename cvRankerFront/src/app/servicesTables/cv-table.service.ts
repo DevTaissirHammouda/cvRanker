@@ -15,7 +15,14 @@ export class CvTableService {
   getCvs(): BehaviorSubject<CvModel[]> {
     return this._cvsBs;
   }
-  setCvs(data: CvModel[]) {
+  setCvs(data: CvModel[],selectedCV:string) {
+    //if selected is not "none" then set the cv with same id first
+    if(selectedCV!=="none"){
+      const selectedCv=data.find(cv=>cv.id===selectedCV)
+      if(selectedCv){
+        data=[selectedCv,...data.filter(cv=>cv.id!==selectedCV)]
+      }
+    }
     this._cvsBs.next(data);
   }
 

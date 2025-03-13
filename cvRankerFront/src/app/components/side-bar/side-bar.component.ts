@@ -36,12 +36,12 @@ export class SideBarComponent implements OnInit {
       route: "/home/jobs",
       role: [Role.JOB_SEEKER,Role.EMPLOYER]
     },
-    {
-      label: "My resume",
-      icon: "fa-solid fa-file",
-      route: "/home/myCv",
-      role: [Role.JOB_SEEKER,Role.EMPLOYER]
-    },
+    // {
+    //   label: "My resume",
+    //   icon: "fa-solid fa-file",
+    //   route: "/home/myCv",
+    //   role: [Role.JOB_SEEKER,Role.EMPLOYER]
+    // },
 
     {
       label: "Logout",

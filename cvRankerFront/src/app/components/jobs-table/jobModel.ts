@@ -6,6 +6,8 @@ export interface JobModel {
  postedBy:string; // Employer ID
   postedAt:Date;
   cvsCount:number;
+  selectedCV:string;
+  status:boolean;
    id:string;
 
 }

@@ -21,7 +21,7 @@ export class JobsTableComponent implements OnInit {
     "companyName",
     "postedAt",
     "cvsCount",
-
+    "status",
     'action'
   ]);
   currentPage$ = new BehaviorSubject<number>(1);
@@ -155,8 +155,11 @@ private router:Router
     }).replace(',', ''); // To remove comma between date and time
   }
 
-goToCvs(jobId:string){
-  this.router.navigate([`/home/jobs/${jobId}`])
+goToCvs(jobId:string,selectedCV:string){
+    if (selectedCV===null){
+      selectedCV='none'
+    }
+  this.router.navigate([`/home/jobs/${jobId}/${selectedCV}`])
 
 }
   getRowColor( index: number): string {

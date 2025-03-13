@@ -72,6 +72,12 @@
             </th>
             <td class="px-6 py-3 truncate max-w-xs" cdk-cell *cdkCellDef="let row">{{ row.description }}</td>
           </ng-container>
+          <ng-container cdkColumnDef="status">
+            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('status')">
+              Status <span *ngIf="sortKey$.value === 'status'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+            </th>
+            <td class="px-6 py-3 truncate max-w-xs" cdk-cell *cdkCellDef="let row">{{ row.status }}</td>
+          </ng-container>
 
           <ng-container cdkColumnDef="action">
             <th class="px-6 py-3 w-1/7 text-center normal-case" cdk-header-cell *cdkHeaderCellDef>
@@ -89,7 +95,7 @@
   </span> </div>
 
 
-                <button (click)="goToCvs(row.id)"  class=" p-2 btn btn-primary rounded-full text-green-600 hover:bg-gray-200" >
+                <button (click)="goToCvs(row.id,row.selectedCV)"  class=" p-2 btn btn-primary rounded-full text-green-600 hover:bg-gray-200" >
                   <i class="fa-regular fa-circle-right"></i>
 
                 </button>

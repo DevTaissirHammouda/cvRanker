@@ -50,6 +50,7 @@ public class CVServiceImpl implements CVService {
     public ResponseEntity<?> selectCV(String jobId, String cvId) {
         Job job = jobRepository.findById(jobId).orElseThrow(() -> new IllegalArgumentException("Job not found"));
         job.setSelectedCV(cvId);
+        job.setStatus(true);
         jobRepository.save(job);
         return ResponseEntity.ok().build();
     }

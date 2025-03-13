@@ -62,6 +62,8 @@ public class JobServiceImpl implements JobService {
                     .postedBy(job.getPostedBy())
                     .postedAt(job.getPostedAt())
                     .CVsCount(cvCount)
+                    .status(job.getStatus())
+                    .selectedCV(job.getSelectedCV())
                     .build();
         }).toList();
     }

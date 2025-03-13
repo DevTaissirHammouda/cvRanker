@@ -17,8 +17,10 @@ public class jobDto {
         private LocalDateTime postedAt;
         private Long CVsCount;
         private String id;
+        private Boolean status;
+        private String selectedCV; // CV ID
 
-        public jobDto(String title, String description, String companyName, String postedBy, LocalDateTime postedAt , Long CVsCount, String id) {
+        public jobDto(String title, String description, String companyName, String postedBy, LocalDateTime postedAt , Long CVsCount, String id, Boolean status, String selectedCV) {
 
             this.title = title;
             this.description = description;
@@ -27,6 +29,8 @@ public class jobDto {
             this.postedAt = postedAt;
             this.CVsCount = CVsCount;
             this.id = id;
+            this.status = status;
+            this.selectedCV = selectedCV;
 
         }
 }

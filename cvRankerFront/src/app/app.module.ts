@@ -27,6 +27,7 @@ import { AllJobsTableComponent } from './components/all-jobs-table/all-jobs-tabl
 import { HomeComponent } from './components/home/home.component';
 import { AccountComponent } from './components/account/account.component';
 import { JobModalComponent } from './components/jobs-table/job-modal/job-modal.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -43,24 +44,25 @@ import { JobModalComponent } from './components/jobs-table/job-modal/job-modal.c
     AccountComponent,
     JobModalComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    CdkTable,
-    PaginationComponent,
-    CdkHeaderRowDef,
-    CdkRowDef,
-    CdkCellDef,
-    CdkHeaderCellDef,
-    CdkHeaderCell,
-    CdkCell,
-    CdkColumnDef,
-    CdkRow,
-    CdkHeaderRow
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        CdkTable,
+        PaginationComponent,
+        CdkHeaderRowDef,
+        CdkRowDef,
+        CdkCellDef,
+        CdkHeaderCellDef,
+        CdkHeaderCell,
+        CdkCell,
+        CdkColumnDef,
+        CdkRow,
+        CdkHeaderRow,
+        NgOptimizedImage
+    ],
   providers: [
     provideAnimationsAsync()
   ],

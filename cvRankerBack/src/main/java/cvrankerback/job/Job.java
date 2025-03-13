@@ -20,5 +20,6 @@ public class Job {
     private String postedBy; // Employer ID
     private LocalDateTime postedAt;
     private String selectedCV; // CV ID
-    private String status;
+    private Boolean status;
+
 }

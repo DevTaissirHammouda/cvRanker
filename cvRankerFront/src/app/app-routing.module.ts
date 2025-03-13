@@ -23,7 +23,7 @@ const routes: Routes = [
 
       // { path: 'job', component: JobPostingComponent,canActivate: [tokenGuard] },
       { path: 'jobs', component: JobsTableComponent,canActivate: [tokenGuard] },
-      {path: 'jobs/:jobId', component: CvsTableComponent,canActivate: [tokenGuard]},
+      {path: 'jobs/:jobId/:selectedCV', component: CvsTableComponent,canActivate: [tokenGuard]},
       { path: 'allJobs', component: AllJobsTableComponent,canActivate: [tokenGuard] },
 
     ],

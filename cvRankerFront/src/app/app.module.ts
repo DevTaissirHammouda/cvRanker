@@ -28,6 +28,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AccountComponent } from './components/account/account.component';
 import { JobModalComponent } from './components/jobs-table/job-modal/job-modal.component';
 import {NgOptimizedImage} from "@angular/common";
+import { CvPostModalComponent } from './components/all-jobs-table/cv-post-modal/cv-post-modal.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {NgOptimizedImage} from "@angular/common";
     AllJobsTableComponent,
     HomeComponent,
     AccountComponent,
-    JobModalComponent
+    JobModalComponent,
+    CvPostModalComponent
   ],
     imports: [
         BrowserModule,

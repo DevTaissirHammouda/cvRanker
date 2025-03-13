@@ -1,6 +1,8 @@
 package cvrankerback.cv;
 
 import cvrankerback.cv.DTO.CVsDto;
+import cvrankerback.users.User;
+import cvrankerback.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
@@ -19,13 +21,14 @@ import java.util.Optional;
 public class CVController {
     private final CVService cvService;
     private final CVRepository cvRepository;
-
+    private final UserRepository userRepository;
     @PostMapping("/upload")
-    public ResponseEntity<CV> uploadCV(@RequestParam("jobSeekerId") String jobSeekerId,
+    public ResponseEntity<CV> uploadCV(@RequestParam("jobSeekerEmail") String jobSeekerEmail,
                                        @RequestParam("jobId") String jobId,
                                        @RequestParam("file") MultipartFile file) throws IOException {
+         Optional<User> user= userRepository.findByEmail(jobSeekerEmail);
         CV cv = CV.builder()
-                .jobSeekerId(jobSeekerId)
+                .jobSeekerId(user.get().getId())
                 .jobId(jobId)
                 .fileName(file.getOriginalFilename())
                 .fileType(file.getContentType())

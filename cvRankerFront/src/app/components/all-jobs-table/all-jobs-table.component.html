@@ -59,7 +59,7 @@
 
           <ng-container cdkColumnDef="cvsCount">
             <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('cvsCount')">
-              CVs Count <span *ngIf="sortKey$.value === 'cvsCount'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+              Resumes Count <span *ngIf="sortKey$.value === 'cvsCount'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
             </th>
             <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.cvsCount }}</td>
           </ng-container>
@@ -70,12 +70,42 @@
             </th>
             <td class="px-6 py-3 truncate max-w-xs" cdk-cell *cdkCellDef="let row">{{ row.description }}</td>
           </ng-container>
+          <ng-container cdkColumnDef="status">
+            <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('status')">
+              Status <span *ngIf="sortKey$.value === 'status'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
+            </th>
+            <td class="px-6 py-3 truncate max-w-xs" *cdkCellDef="let row">
+  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+        [ngClass]="row.status ?
+           'bg-red-100 text-red-800 ':
+          'bg-green-100 text-green-800 '">
+    <span class="w-2 h-2 mr-1.5 rounded-full"
+          [ngClass]="row.status ? ' bg-red-600' : ' bg-green-600'">
+    </span>
+    {{ row.status ? 'Closed' : 'Open' }}
+  </span>
+            </td>
 
+          </ng-container>
           <ng-container cdkColumnDef="Action">
             <th class="px-6 py-4 cursor-pointer" cdk-header-cell *cdkHeaderCellDef (click)="adjustSort('Action')">
               Action <span *ngIf="sortKey$.value === 'Action'">{{ sortDirection$.value === 'asc' ? '⬆️' : '⬇️' }}</span>
             </th>
-            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">{{ row.Action }}</td>
+            <td class="px-6 py-3" cdk-cell *cdkCellDef="let row">
+              <button (click)="setJobId(row.id);cvPostModalComponent.showModel()" data-modal-target="popup-modal-post-cv" data-modal-toggle="popup-modal-post-cv"
+                      class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md shadow-sm
+             transition-colors duration-200 ease-in-out"
+                [ngClass]="row.status ?
+        'bg-gray-300 text-gray-500 cursor-not-allowed' :
+        'text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'"
+                [disabled]="row.status"
+                >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                {{ row.status ? "Job Closed" : "Post resume" }}
+              </button>
+            </td>
           </ng-container>
         </table>
       </div>
@@ -88,3 +118,4 @@
     </div>
   </div>
 </section>
+<app-cv-post-modal></app-cv-post-modal>

@@ -37,7 +37,7 @@ export class SideBarComponent implements OnInit {
       role: [Role.JOB_SEEKER,Role.EMPLOYER]
     },
     {
-      label: "CV",
+      label: "My resume",
       icon: "fa-solid fa-file",
       route: "/cv",
       role: [Role.JOB_SEEKER,Role.EMPLOYER]

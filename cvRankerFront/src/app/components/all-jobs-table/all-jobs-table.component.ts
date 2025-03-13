@@ -1,18 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {BehaviorSubject, combineLatest} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {JobService} from "../../services/job.service";
 import {JobTableService} from "../../servicesTables/job-table.service";
-import {initFlowbite} from "flowbite";
+import {initFlowbite, Modal} from "flowbite";
+import {SharedInformationService} from "../../servicesTables/shared-information.service";
+import {CvPostModalComponent} from "./cv-post-modal/cv-post-modal.component";
 
 @Component({
   selector: 'app-all-jobs-table',
   templateUrl: './all-jobs-table.component.html',
   styleUrl: './all-jobs-table.component.css'
 })
-export class AllJobsTableComponent implements OnInit {
+export class AllJobsTableComponent implements OnInit,AfterViewInit {
   tableDataSource$ = new BehaviorSubject<any[]>([]);
-
+  @ViewChild(CvPostModalComponent) cvPostModalComponent!: CvPostModalComponent;
   displayedColumns$ = new BehaviorSubject<string[]>([
     "title",
     "description",
@@ -20,7 +22,7 @@ export class AllJobsTableComponent implements OnInit {
     "companyName",
     "postedAt",
     "cvsCount",
-
+    "status",
     'Action'
   ]);
   currentPage$ = new BehaviorSubject<number>(1);
@@ -35,7 +37,8 @@ export class AllJobsTableComponent implements OnInit {
 
   constructor(
     private jobService:JobService,
-    private jobTableservice:JobTableService
+    private jobTableservice:JobTableService,
+    private sharedInformationService: SharedInformationService
 
   ) { }
 
@@ -44,6 +47,12 @@ export class AllJobsTableComponent implements OnInit {
 
 
   //
+ngAfterViewInit() {
+//initt modal
+  this.cvPostModalComponent.modal = new Modal(document.getElementById('popup-modal-post-cv'));
+
+
+}
 
   ngOnInit() {
     initFlowbite()
@@ -153,7 +162,10 @@ export class AllJobsTableComponent implements OnInit {
     }).replace(',', ''); // To remove comma between date and time
   }
 
+setJobId(jobId: string) {
+    this.sharedInformationService.setJobId(jobId);
 
+}
   getRowColor( index: number): string {
     // Example condition: alternate row colors based on index
     return index % 2 === 0 ? 'bg-white' : 'bg-gray-100';

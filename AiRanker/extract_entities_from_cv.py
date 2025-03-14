@@ -17,3 +17,9 @@ class CVNER:
             print("Non-English text detected, may require different model...")
         # Return NER results
         return self.nlp(text)
+
+    def get_needed_entities(self, entities):
+        """Filter and return only the needed entities."""
+        needed_labels = ["PER", "ORG", "LOC", "MISC"]  # Adjust this based on needed entities for CV
+        filtered_entities = [entity for entity in entities if entity['entity'] in needed_labels]
+        return filtered_entities

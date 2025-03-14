@@ -1,4 +1,5 @@
 def filter_entities(entities):
+    """Filter out broken or irrelevant entities."""
     filtered_entities = []
     for entity in entities:
         # Remove subword tokens or broken entities

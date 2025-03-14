@@ -5,12 +5,12 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 # Download required NLTK datasets
-nltk.download("punkt")
-nltk.download("stopwords")
-nltk.download("wordnet")
+nltk.download("punkt", quiet=True)
+nltk.download("stopwords", quiet=True)
+nltk.download("wordnet", quiet=True)
 
 def preprocess_text(text):
-    # Remove special characters and extra spaces
+    """Cleans and processes text: removes special characters, stopwords, and lemmatizes."""
     text = re.sub(r'\s+', ' ', text)  # Remove extra spaces
     text = re.sub(r'[^\w\s]', '', text)  # Remove punctuation
     text = text.lower()  # Convert to lowercase
@@ -27,8 +27,3 @@ def preprocess_text(text):
     words = [lemmatizer.lemmatize(word) for word in words]
 
     return " ".join(words)
-
-# Example Usage
-raw_text = "John Doe, Software Engineer. Skills: Python, Java, AI."
-cleaned_text = preprocess_text(raw_text)
-print(cleaned_text)

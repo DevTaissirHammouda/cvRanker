@@ -1,38 +1,42 @@
 import pandas as pd
 import os
+import nltk
+from nltk.corpus import stopwords
+from imblearn.over_sampling import SMOTE
+
+nltk.download('stopwords')
+STOPWORDS = set(stopwords.words('english'))
 
 def clean_dataset(input_file, output_file):
     try:
-        # Read the dataset (handle missing headers)
-        df = pd.read_csv(input_file, encoding="utf-8", on_bad_lines='skip')  # Changed error_bad_lines to on_bad_lines
+        # Load dataset
+        df = pd.read_csv(input_file, encoding="utf-8", on_bad_lines='skip')
 
-        print("Dataset read successfully. Checking columns...")
-        print("Columns found:", df.columns.tolist())
+        print(f"✅ Dataset loaded with {len(df)} rows. Cleaning started...")
 
-        # Ensure required columns exist
-        required_columns = ["Resume_str", "Category"]
-        for col in ['Resume_str', 'Category']:
-            if col not in df.columns:
-                raise ValueError(f"Column '{col}' is missing from dataset.")
+        # Ensure required columns
+        if 'Resume_str' not in df.columns or 'Category' not in df.columns:
+            raise ValueError("Dataset must contain 'Resume_str' and 'Category' columns")
 
-        # Select only the required columns
-        df = df[['Resume_str', 'Category']]
+        # Remove duplicates
+        df = df.drop_duplicates()
 
-        # Remove missing or empty values
+        # Remove stopwords from resumes
+        df['Resume_str'] = df['Resume_str'].apply(lambda text: ' '.join([word for word in text.split() if word.lower() not in STOPWORDS]))
+
+        # Handle missing values
         df = df.dropna(subset=['Resume_str', 'Category'])
-        df = df[df['Resume_str'].str.strip() != ""]  # Remove rows with empty Resume_str
+        df = df[df['Resume_str'].str.strip() != ""]
 
-        # Basic text cleaning (removing extra spaces)
-        df['Resume_str'] = df['Resume_str'].str.replace(r'\s+', ' ', regex=True)
+        # Fix imbalanced data using SMOTE
+        smote = SMOTE()
+        X_resampled, y_resampled = smote.fit_resample(df[['Resume_str']], df['Category'])
+        df = pd.DataFrame({'Resume_str': X_resampled['Resume_str'], 'Category': y_resampled})
 
-        # Save the cleaned dataset
+        # Save cleaned dataset
         df.to_csv(output_file, index=False)
 
-        # Verify if file is created successfully
-        if os.path.exists(output_file):
-            print(f"✅ Cleaned dataset saved to {output_file} with {len(df)} rows.")
-        else:
-            print("❌ Error: File not created!")
+        print(f"✅ Cleaned dataset saved to {output_file} with {len(df)} rows.")
 
     except Exception as e:
-        print(f"🚨 Error: {e}")
+        print(f"🚨 Error in dataset cleaning: {e}")

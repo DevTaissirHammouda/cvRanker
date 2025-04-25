@@ -13,7 +13,8 @@ import {MyCvComponent} from "./components/my-cv/my-cv.component";
 
 
 const routes: Routes = [
-
+  { path: '**', redirectTo: 'login' },
+  { path: '/', redirectTo: 'login' },
 
   {
     path: 'home',

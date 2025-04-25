@@ -13,26 +13,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Install dependencies
+      - name: Install frontend dependencies
+        working-directory: cvRankerFront
         run: npm install
 
-#      - name: Run tests
-#        run: npm run test -- --watch=false
-
-      - name: Build Angular app
+      - name: Build Angular frontend
+        working-directory: cvRankerFront
         run: npm run build --prod
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build Docker image
-        uses: docker/build-push-action@v5
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          context: .
-          tags: devops:latest
-          push: false # Set to true if you want to push to Docker Hub or another registry
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build Spring Boot backend
+        working-directory: cvRankerBack
+        run: ./mvnw clean package -DskipTests

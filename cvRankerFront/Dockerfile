@@ -1,9 +1,9 @@
 # Build Stage
 FROM node:20 AS build
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY cvRankerFront/package.json package-lock.json ./
 RUN npm install
-COPY . .
+COPY cvRankerFront .
 RUN npm run build --prod
 
 # Production Stage

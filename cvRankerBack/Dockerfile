@@ -1,7 +1,7 @@
 # Build Stage
 FROM eclipse-temurin:17 AS build
 WORKDIR /app
-COPY cvRankerBack /app
+COPY . /app
 RUN ./mvnw clean package -DskipTests
 
 # Runtime Stage

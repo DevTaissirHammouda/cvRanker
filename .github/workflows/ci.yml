@@ -13,6 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # FRONTEND CI
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -26,7 +27,8 @@ jobs:
         working-directory: cvRankerFront
         run: npm run build --prod
 
-      - name: Set up JDK 17
+      # BACKEND CI
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
@@ -35,3 +37,8 @@ jobs:
       - name: Build Spring Boot backend
         working-directory: cvRankerBack
         run: ./mvnw clean package -DskipTests
+
+      # Optional: add unit tests
+      # - name: Run Backend Tests
+      #   working-directory: cvRankerBack
+      #   run: ./mvnw test

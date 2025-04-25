@@ -2,13 +2,13 @@
 FROM node:20 AS build
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json from cvRankerFront
 COPY cvRankerFront/package.json cvRankerFront/package-lock.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy all other source files into the container
+# Copy the rest of the application files from cvRankerFront to /app
 COPY cvRankerFront/ ./
 
 # Build the project
@@ -17,7 +17,7 @@ RUN npm run build --prod
 # Production Stage
 FROM nginx:alpine
 
-# Copy the built project to NGINX's directory
+# Copy the build output from the build stage to nginx's html directory
 COPY --from=build /app/dist/devops /usr/share/nginx/html
 
 # Expose port 80 for the application

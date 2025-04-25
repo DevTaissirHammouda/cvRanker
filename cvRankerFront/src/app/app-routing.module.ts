@@ -13,9 +13,9 @@ import {MyCvComponent} from "./components/my-cv/my-cv.component";
 
 
 const routes: Routes = [
-  { path: '**', redirectTo: 'login' },
-  { path: '/', redirectTo: 'login' },
-
+  { path: '**', component: UserLoginComponent },
+  { path: '/', component: UserLoginComponent },
+  { path: '', component: UserLoginComponent },
   {
     path: 'home',
     component: HomeComponent,

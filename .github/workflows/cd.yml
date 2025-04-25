@@ -18,7 +18,8 @@ jobs:
 
       # --- Backend ---
       - name: Build backend Docker image
-        run: docker build -t cv-ranker-back -f backend.Dockerfile .
+        run: docker build -t cv-ranker-back -f cvRankerBack/Dockerfile cvRankerBack
+
 
       - name: Run backend container
         run: |
@@ -28,7 +29,8 @@ jobs:
 
       # --- Frontend ---
       - name: Build frontend Docker image
-        run: docker build -t cv-ranker-front -f Dockerfile .
+        run: docker build -t cv-ranker-front -f cvRankerFront/Dockerfile cvRankerFront
+
 
       - name: Run frontend container
         run: |

@@ -36,7 +36,7 @@ jobs:
 
       - name: Build Spring Boot backend
         working-directory: cvRankerBack
-        run: ./mvnw clean package -DskipTests
+        run: mvn clean package -DskipTests
 
       # Optional: add unit tests
       # - name: Run Backend Tests

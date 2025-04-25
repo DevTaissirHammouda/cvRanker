@@ -1,23 +1,75 @@
-# Specify the provider as Docker
-provider "docker" {}
+provider "azurerm" {
+  features {}
+}
 
-# Define a Docker image resource
-resource "docker_image" "devops" {
-  name = "devops"
+resource "azurerm_resource_group" "rg" {
+  name     = "cv-ranker-rg"
+  location = "East US"
+}
 
-  build {
-    context = "${path.module}"  # Path to your application directory (current directory)
-    dockerfile = "Dockerfile"    # Make sure the Dockerfile is in the same directory
+resource "azurerm_virtual_network" "vnet" {
+  name                = "cv-ranker-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_subnet" "subnet" {
+  name                 = "cv-ranker-subnet"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+resource "azurerm_network_interface" "nic" {
+  name                = "cv-ranker-nic"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.ip.id
   }
 }
 
-# Define a Docker container resource
-resource "docker_container" "devops" {
-  name  = "devops"               # Name for the Docker container
-  image = docker_image.devops.latest  # Reference to the built image
+resource "azurerm_public_ip" "ip" {
+  name                = "cv-ranker-ip"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+  sku                 = "Basic"
+}
 
-  ports {
-    internal = 5000  # Port inside the container
-    external = 5000  # Port exposed on the host machine
+resource "azurerm_linux_virtual_machine" "vm" {
+  name                = "cv-ranker-vm"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  size                = "Standard_B1s"
+  admin_username      = "azureuser"
+  network_interface_ids = [
+    azurerm_network_interface.nic.id,
+  ]
+
+  admin_password = "CvRanker@123"  # You can use SSH instead for security in real use
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+    name                 = "cv-ranker-osdisk"
   }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "22_04-lts"
+    version   = "latest"
+  }
+
+  custom_data = filebase64("${path.module}/cloud-init.txt")
+}
+
+output "public_ip" {
+  value = azurerm_public_ip.ip.ip_address
 }

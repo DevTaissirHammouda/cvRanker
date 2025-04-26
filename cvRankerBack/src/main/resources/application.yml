@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/cvRanker
+      uri: mongodb://mongodb:27017/cvRanker  # Use the service name defined in docker-compose.yml
   application:
     name: cvRanker
 
@@ -9,5 +9,4 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
 

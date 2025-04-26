@@ -13,44 +13,30 @@ import {MyCvComponent} from "./components/my-cv/my-cv.component";
 
 
 const routes: Routes = [
-  { path: '**', component: UserLoginComponent },
-  { path: '/', component: UserLoginComponent },
   { path: '', component: UserLoginComponent },
   {
     path: 'home',
     component: HomeComponent,
     canActivate: [],
-    children:[
-
-
-      // { path: 'job', component: JobPostingComponent,canActivate: [tokenGuard] },
-      { path: 'jobs', component: JobsTableComponent,canActivate: [tokenGuard] },
-      {path: 'jobs/:jobId/:selectedCV', component: CvsTableComponent,canActivate: [tokenGuard]},
-      { path: 'allJobs', component: AllJobsTableComponent,canActivate: [tokenGuard] },
-      { path: 'myCv', component: MyCvComponent,canActivate: [tokenGuard] },
-
-
+    children: [
+      { path: 'jobs', component: JobsTableComponent, canActivate: [tokenGuard] },
+      { path: 'jobs/:jobId/:selectedCV', component: CvsTableComponent, canActivate: [tokenGuard] },
+      { path: 'allJobs', component: AllJobsTableComponent, canActivate: [tokenGuard] },
+      { path: 'myCv', component: MyCvComponent, canActivate: [tokenGuard] },
     ],
   },
-
-
   {
     path: 'account',
     component: AccountComponent,
     canActivate: [],
-    children:[
-
+    children: [
       { path: 'login', component: UserLoginComponent },
       { path: 'register', component: UserRegisterComponent },
-      { path: '', redirectTo: 'login', pathMatch: 'full' }, // Default route
-
+      { path: '', redirectTo: 'login', pathMatch: 'full' }, // Default route inside /account
       { path: '**', redirectTo: 'login' },
-
     ],
-
-
   },
-
+  { path: '**', redirectTo: '', pathMatch: 'full' }, // catch-all, redirect to main page
 ];
 
 

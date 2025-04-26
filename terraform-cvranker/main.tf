@@ -49,16 +49,16 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location            = azurerm_resource_group.rg.location
   size                = "Standard_B1s"
   admin_username      = "azureuser"
+  admin_password      = "Password1234!"  # INSECURE - FOR TESTING ONLY
+  disable_password_authentication = false  # INSECURE - FOR TESTING ONLY
+
   network_interface_ids = [
     azurerm_network_interface.nic.id,
   ]
 
-  admin_password = "CvRanker@123"  # You can use SSH instead for security in real use
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    name                 = "cv-ranker-osdisk"
   }
 
   source_image_reference {

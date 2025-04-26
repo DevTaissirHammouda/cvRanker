@@ -34,3 +34,5 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
         working-directory: terraform-cvranker
+      - name: Terraform Import Resource Group
+        run: terraform import azurerm_resource_group.rg /subscriptions/76a4363b-51cd-436d-8807-cbdc50e7a3d7/resourceGroups/cv-ranker-rg

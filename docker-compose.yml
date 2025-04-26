@@ -1,31 +1,16 @@
 version: '3.8'
-
 services:
   backend:
-    build:
-      context: .
-      dockerfile: cvRankerBack/Dockerfile
-    container_name: cv-ranker-back
-    ports:
-      - "8080:8080"
+    build: ./cvRankerBack
+    ports: ["8080:8080"]
     restart: unless-stopped
-    environment:
-      - NODE_ENV=production
-    networks:
-      - cv-network
+    networks: ["cv-network"]
 
   frontend:
-    build:
-      context: .
-      dockerfile: cvRankerFront/Dockerfile
-    container_name: cv-ranker-front
-    ports:
-      - "4200:80"
-    restart: unless-stopped
-    depends_on:
-      - backend
-    networks:
-      - cv-network
+    build: ./cvRankerFront
+    ports: ["4200:80"]
+    depends_on: ["backend"]
+    networks: ["cv-network"]
 
 networks:
   cv-network:

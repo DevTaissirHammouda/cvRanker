@@ -1,11 +1,15 @@
 # main.py
 
 from data_loader import *
-resumes_df = load_resumes('data/resumes/resumes.csv')
-jobs_df = load_jobs('data/jobs/jobs.csv')
+from utils import *
 
-print("Loaded resumes:", resumes_df.shape[0])
-print("Loaded jobs:", jobs_df.shape[0])
+resumes_df = load_resumes('AiRanker/data/resumes/resumes.csv')
+jobs_df = load_jobs('AiRanker/data/jobs/jobs.csv')
 
-print(resumes_df.head())
-print(jobs_df.head())
+
+# Apply preprocessing
+resumes_df['cleaned_resume'] = resumes_df['Resume'].apply(preprocess_text)
+jobs_df['cleaned_job_desc'] = jobs_df['Job Description'].apply(preprocess_text)
+
+print(resumes_df[['Category', 'cleaned_resume']].head())
+print(jobs_df[['Job Title', 'cleaned_job_desc']].head())

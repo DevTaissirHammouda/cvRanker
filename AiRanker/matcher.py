@@ -17,4 +17,5 @@ def compute_similarity(resumes, jobs):
     job_vecs = tfidf_matrix[len(resumes):]
 
     similarity_matrix = cosine_similarity(resume_vecs, job_vecs)
+    
     return similarity_matrix

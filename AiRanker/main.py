@@ -1,80 +1,62 @@
-from data_loader import *
-from utils import *
-from matcher import compute_similarity
-from skills import *
+from data_loader import load_resumes, load_jobs, load_skills
+from utils import preprocess_text, extract_skills
+from matcher_tfidf import compute_tfidf_similarity
+from matcher_bert import compute_bert_similarity
+from skill_vector import skills_to_vector, compute_skill_similarity_matrix
+from ranking import combine_similarities, get_top_matches
+
 import numpy as np
-import pandas as pd
 
-print("Starting script...")
+def main():
+    print("Loading resumes...")
+    resumes_df = load_resumes('AiRanker/data/resumes/resumes.csv')
+    print(f"{len(resumes_df)} resumes loaded.")
 
-# Load data
-print("Loading resumes...")
-resumes_df = load_resumes('AiRanker/data/resumes/resumes.csv')
-print(f"Loaded {len(resumes_df)} resumes")
+    print("Loading jobs...")
+    jobs_df = load_jobs('AiRanker/data/jobs/jobs.csv')
+    print(f"{len(jobs_df)} jobs loaded.")
 
-print("Loading jobs...")
-jobs_df = load_jobs('AiRanker/data/jobs/jobs.csv')
-print(f"Loaded {len(jobs_df)} jobs")
+    print("Preprocessing text...")
+    resumes_df['cleaned_resume'] = resumes_df['Resume'].apply(preprocess_text)
+    jobs_df['cleaned_job_desc'] = jobs_df['Job Description'].apply(preprocess_text)
 
-# Preprocess text columns
-print("Preprocessing resumes...")
-resumes_df['cleaned_resume'] = resumes_df['Resume'].apply(preprocess_text)
-print("Preprocessing jobs...")
-jobs_df['cleaned_job_desc'] = jobs_df['Job Description'].apply(preprocess_text)
+    print("Loading skills...")
+    skills_set = load_skills('AiRanker/data/skills/skills.csv')
 
-print("Loading skills...")
-skills_set = load_skills('AiRanker/data/skills/skills.csv')
-print(f"Loaded {len(skills_set)} unique skills")
+    print("Extracting skills...")
+    resumes_df['skills'] = resumes_df['cleaned_resume'].apply(lambda x: extract_skills(x, skills_set))
+    jobs_df['skills'] = jobs_df['cleaned_job_desc'].apply(lambda x: extract_skills(x, skills_set))
 
-print("Extracting skills from resumes...")
-resumes_df['skills'] = resumes_df['cleaned_resume'].apply(lambda x: extract_skills(x, skills_set))
-print("Extracting skills from jobs...")
-jobs_df['skills'] = jobs_df['cleaned_job_desc'].apply(lambda x: extract_skills(x, skills_set))
+    print("Vectorizing skills...")
+    skill_to_idx = {skill: idx for idx, skill in enumerate(skills_set)}
+    resume_skill_vecs = np.array([skills_to_vector(s, skill_to_idx) for s in resumes_df['skills']])
+    job_skill_vecs = np.array([skills_to_vector(s, skill_to_idx) for s in jobs_df['skills']])
 
-print("Computing text similarity (this may take some time)...")
-similarity = compute_similarity(resumes_df['cleaned_resume'], jobs_df['cleaned_job_desc'])
-print("Text similarity computed.")
+    print("Computing skill similarity matrix...")
+    skill_sim_matrix = compute_skill_similarity_matrix(resume_skill_vecs, job_skill_vecs)
 
-print("Mapping skills to vectors...")
-skill_to_idx = {skill: idx for idx, skill in enumerate(skills_set)}
+    print("Computing TF-IDF similarity...")
+    tfidf_sim = compute_tfidf_similarity(resumes_df['cleaned_resume'], jobs_df['cleaned_job_desc'])
 
-def skills_to_vector(skills, skill_to_idx):
-    vec = np.zeros(len(skill_to_idx), dtype=bool)
-    for skill in skills:
-        idx = skill_to_idx.get(skill)
-        if idx is not None:
-            vec[idx] = True
-    return vec
+    print("Computing SBERT similarity...")
+    bert_sim = compute_bert_similarity(resumes_df['cleaned_resume'], jobs_df['cleaned_job_desc'])
 
-print("Creating resume skill vectors...")
-resume_skill_vectors = np.array([skills_to_vector(skills, skill_to_idx) for skills in resumes_df['skills']])
-print("Creating job skill vectors...")
-job_skill_vectors = np.array([skills_to_vector(skills, skill_to_idx) for skills in jobs_df['skills']])
+    print("Combining similarities...")
+    tfidf_combined = combine_similarities(tfidf_sim, skill_sim_matrix)
+    bert_combined = combine_similarities(bert_sim, skill_sim_matrix)
 
-print("Computing skill similarity matrix...")
-intersection = np.dot(resume_skill_vectors, job_skill_vectors.T)
+    top_n = 3
+    tfidf_top_matches = get_top_matches(tfidf_combined, top_n)
+    bert_top_matches = get_top_matches(bert_combined, top_n)
 
-resume_skill_counts = resume_skill_vectors.sum(axis=1, keepdims=True)
-job_skill_counts = job_skill_vectors.sum(axis=1, keepdims=True).T
+    for i in range(len(resumes_df)):
+        print(f"\nResume {i} ({resumes_df.iloc[i]['Category']}):")
+        print("  TF-IDF Top Matches:")
+        for rank, (job_idx, score) in enumerate(tfidf_top_matches[i], 1):
+            print(f"    {rank}. {jobs_df.iloc[job_idx]['Job Title']} (Score: {score:.3f})")
+        print("  SBERT Top Matches:")
+        for rank, (job_idx, score) in enumerate(bert_top_matches[i], 1):
+            print(f"    {rank}. {jobs_df.iloc[job_idx]['Job Title']} (Score: {score:.3f})")
 
-union = resume_skill_counts + job_skill_counts - intersection
-union = np.where(union == 0, 1, union)
-
-skill_sim_matrix = intersection / union
-print("Skill similarity matrix computed.")
-
-print("Combining text and skill similarity...")
-combined_similarity = 0.7 * similarity + 0.3 * skill_sim_matrix
-
-top_n = 3
-
-for resume_idx in range(len(resumes_df)):
-    top_indices = np.argsort(combined_similarity[resume_idx])[::-1][:top_n]
-    print(f"\nTop {top_n} job matches for Resume {resume_idx} ({resumes_df.iloc[resume_idx]['Category']}):")
-
-    for i, job_idx in enumerate(top_indices):
-        score = combined_similarity[resume_idx][job_idx]
-        title = jobs_df.iloc[job_idx]['Job Title']
-        print(f"{i+1}. {title} (Score: {score:.2f})")
-
-print("Script finished.")
+if __name__ == '__main__':
+    main()

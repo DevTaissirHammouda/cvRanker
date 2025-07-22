@@ -1,10 +1,10 @@
-from data_loader import load_resumes, load_jobs, load_skills
-from utils import preprocess_text, extract_skills
-from matcher_tfidf import compute_tfidf_similarity
-from matcher_bert import compute_bert_similarity
-from skill_vector import skills_to_vector, compute_skill_similarity_matrix
-from ranking import combine_similarities, get_top_matches
-
+from data_loader import *
+from utils import *
+from matcher_tfidf import *
+from matcher_bert import *
+from skill_vector import *
+from ranking import *
+from skills import *
 import numpy as np
 
 def main():

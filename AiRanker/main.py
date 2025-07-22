@@ -44,28 +44,23 @@ def main():
     skill_sim_matrix = compute_skill_similarity_matrix(resume_skill_vecs, job_skill_vecs)
 
     print("Computing TF-IDF similarity...")
-    tfidf_sim = compute_tfidf_similarity(resumes_df['cleaned_resume'], jobs_df['cleaned_job_desc'])
+    # tfidf_sim = compute_tfidf_similarity(resumes_df['cleaned_resume'], jobs_df['cleaned_job_desc'])
 
     print("Computing SBERT similarity...")
     bert_sim = compute_bert_similarity(resumes_df['cleaned_resume'], jobs_df['cleaned_job_desc'])
 
     print("Combining similarities...")
-    tfidf_combined = combine_similarities(tfidf_sim, skill_sim_matrix)
+    # tfidf_combined = combine_similarities(tfidf_sim, skill_sim_matrix)
     bert_combined = combine_similarities(bert_sim, skill_sim_matrix)
 
     top_n = 3
-    tfidf_top_matches = get_top_matches(tfidf_combined, top_n)
+    # tfidf_top_matches = get_top_matches(tfidf_combined, top_n)
     bert_top_matches = get_top_matches(bert_combined, top_n)
 
     print("\n=== Matching Results ===")
     for i in range(len(resumes_df)):
         category = resumes_df.iloc[i]['Category']
         print(f"\nResume {i} (Category: {category}):")
-
-        print("  TF-IDF Top Matches:")
-        for rank, (job_idx, score) in enumerate(tfidf_top_matches[i], 1):
-            job_title = jobs_df.iloc[job_idx]['Job Title']
-            print(f"    {rank}. {job_title} (Score: {score:.3f})")
 
         print("  SBERT Top Matches:")
         for rank, (job_idx, score) in enumerate(bert_top_matches[i], 1):

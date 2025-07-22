@@ -16,6 +16,14 @@ def main():
     jobs_df = load_jobs('AiRanker/data/jobs/jobs.csv')
     print(f"{len(jobs_df)} jobs loaded.")
 
+    # Validate essential columns
+    for col in ['Category', 'Resume']:
+        if col not in resumes_df.columns:
+            raise ValueError(f"Resumes data missing required column: '{col}'")
+    for col in ['Job Title', 'Job Description']:
+        if col not in jobs_df.columns:
+            raise ValueError(f"Jobs data missing required column: '{col}'")
+
     print("Preprocessing text...")
     resumes_df['cleaned_resume'] = resumes_df['Resume'].apply(preprocess_text)
     jobs_df['cleaned_job_desc'] = jobs_df['Job Description'].apply(preprocess_text)
@@ -49,14 +57,20 @@ def main():
     tfidf_top_matches = get_top_matches(tfidf_combined, top_n)
     bert_top_matches = get_top_matches(bert_combined, top_n)
 
+    print("\n=== Matching Results ===")
     for i in range(len(resumes_df)):
-        print(f"\nResume {i} ({resumes_df.iloc[i]['Category']}):")
+        category = resumes_df.iloc[i]['Category']
+        print(f"\nResume {i} (Category: {category}):")
+
         print("  TF-IDF Top Matches:")
         for rank, (job_idx, score) in enumerate(tfidf_top_matches[i], 1):
-            print(f"    {rank}. {jobs_df.iloc[job_idx]['Job Title']} (Score: {score:.3f})")
+            job_title = jobs_df.iloc[job_idx]['Job Title']
+            print(f"    {rank}. {job_title} (Score: {score:.3f})")
+
         print("  SBERT Top Matches:")
         for rank, (job_idx, score) in enumerate(bert_top_matches[i], 1):
-            print(f"    {rank}. {jobs_df.iloc[job_idx]['Job Title']} (Score: {score:.3f})")
+            job_title = jobs_df.iloc[job_idx]['Job Title']
+            print(f"    {rank}. {job_title} (Score: {score:.3f})")
 
 if __name__ == '__main__':
     main()

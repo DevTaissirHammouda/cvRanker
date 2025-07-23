@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, numberAttribute, OnInit, Output} from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, NgClass} from "@angular/common";
 
 
 @Component({
@@ -8,6 +8,7 @@ import {NgForOf, NgIf} from "@angular/common";
   imports: [
     NgIf,
     NgForOf,
+    NgClass,
   ],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss'
@@ -15,6 +16,10 @@ import {NgForOf, NgIf} from "@angular/common";
 
 
 export class PaginationComponent implements OnInit {
+  // Make Math available in the template
+  Math = Math;
+  
+  @Output() pageSizeChange = new EventEmitter<number>();
 
   @Input() collectionSize: number = 1;
   @Input() pageSize: number = 1;
@@ -55,5 +60,23 @@ export class PaginationComponent implements OnInit {
 
   callPageChange() {
     this.pageChange.emit(this.currentPage)
+  }
+
+  /**
+   * Handles page size change from the dropdown
+   */
+  onPageSizeChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const newPageSize = parseInt(selectElement.value, 10);
+    
+    // Update page size
+    this.pageSize = newPageSize;
+    
+    // Reset to first page when changing page size
+    this.currentPage = 1;
+    
+    // Emit both events
+    this.pageSizeChange.emit(newPageSize);
+    this.callPageChange();
   }
 }

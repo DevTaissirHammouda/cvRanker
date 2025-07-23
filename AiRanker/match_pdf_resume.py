@@ -10,7 +10,7 @@ from resume_parser import parse_resume
 
 print("Loading BERT model...")
 model = SentenceTransformer("all-MiniLM-L6-v2")
-
+#dxs
 # Load jobs directly from the source file instead of relying on saved vectors
 from data_loader import load_jobs
 from utils import preprocess_text as utils_preprocess_text
